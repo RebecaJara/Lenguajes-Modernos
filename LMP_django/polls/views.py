@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Choice, Question
-
+from .forms import QuestionForm, ChoiceForm
 
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
@@ -47,3 +47,28 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+    
+
+
+#  Proyecto parte 3
+
+def question(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, "polls")
+    else:
+        form = QuestionForm()
+    return render(request, 'polls/question.html', {'form': form})
+
+def choice(request):
+    if request.method == 'POST':
+        form = ChoiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, "polls")
+    else:
+        form = ChoiceForm()
+    return render(request, 'polls/choice.html', {'form': form})
+

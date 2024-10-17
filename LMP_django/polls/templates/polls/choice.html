@@ -1,0 +1,24 @@
+<h1>Añadir una nueva opción</h1>
+<form method="post">
+    {% csrf_token %}
+    
+    <!-- Seleccionar pregunta -->
+    <label for="question">Question:</label>
+    <select name="question" required>
+        {% for question in form.question.field.queryset %}
+            <option value="{{ question.id }}" {% if question.id == form.question.value %}selected{% endif %}>
+                {{ question.question_text }}
+            </option>
+        {% endfor %}
+    </select><br><br>
+    
+    <!-- Nueva opcion -->
+    <label for="choice_text">Add choice:</label>
+    <input type="text" name="choice_text" value="{{ form.choice_text.value }}" placeholder="Escribe una opción..." required><br><br>
+    
+    <!-- Votos -->
+    <label for="votes">Votos:</label>
+    <input type="number" name="votes" value="{{ form.votes.value|default:0 }}" min="0" required><br><br>
+
+    <button type="submit">Guardar opción</button>
+</form>

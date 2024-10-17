@@ -1,0 +1,14 @@
+<h1>Añadir una nueva pregunta</h1>
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Pregunta -->
+    <label for="question_text">Question:</label>
+    <input type="text" name="question_text" value="{{ form.question_text.value }}" required><br><br>
+    
+    <!-- Fecha -->
+    <label for="pub_date">Date published:</label>
+    <input type="date" name="pub_date" value="{{ form.pub_date.value }}" required><br><br>
+
+    <button type="submit">Guardar pregunta</button>
+</form>
